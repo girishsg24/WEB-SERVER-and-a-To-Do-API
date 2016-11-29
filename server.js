@@ -1,27 +1,10 @@
 var express=require('express');
 var app=express();
 var PORT=process.env.PORT||3000;
-var todos=[
-			{
-				id:1,
-				description:'Call mom in the morning.',
-				completed:false
-
-			},
-			{
-				id:2,
-				description:'Be Batman & save somebody!',
-				completed:false
-			},
-			{
-				id:3,
-				description:'Be Awesome!',
-				completed:true
-			}
-
-
-		];
-
+var bodyParser=require('body-parser');
+app.use(bodyParser.json());
+var id=1;
+var todos=[];
 app.get('/',
 	function(req,res)
 	{
@@ -35,6 +18,7 @@ app.get('/todos',
 			res.json(todos);
 		}
 	);
+
 app.get('/todos/:id',
 		function(req,res)
 		{
@@ -52,9 +36,22 @@ app.get('/todos/:id',
 				res.status(404).send('Page Not found Ya!');
 		}
 	);
+
+app.post('/todos',
+	function(req,res)
+	{
+		var body=req.body;
+		body.id=id++;
+		todos.push(body);
+		res.json(body);
+	}
+);
+
 app.listen(PORT,
 			function()
 			{
 				console.log("Running Express at port number: "+PORT+'!');
 			}
 		);
+
+
