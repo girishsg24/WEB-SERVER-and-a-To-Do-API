@@ -37,7 +37,6 @@ app.post('/todos',
 
 
 		var body=_.pick(req.body,'description','completed');
-		//body.description=body.description.trim();
 		if (_.isBoolean(body.completed)&&_.isString(body.description)&& body.description.trim().length!=0)
 		{
 			body.description=body.description.trim();
@@ -51,7 +50,6 @@ app.post('/todos',
 );
 
 app.delete('/todos/:id', function (req, res) {
-	//var todoId = parseInt(req.params.id, 10);
 	var matchedTodo = _.findWhere(todos, {id: parseInt(req.params.id)});
 
 	if (!matchedTodo) {
@@ -60,6 +58,38 @@ app.delete('/todos/:id', function (req, res) {
 		todos = _.without(todos, matchedTodo);
 		res.json(matchedTodo);
 	}
+});
+
+app.put('/todos/:id',function(req,res){
+	var body=_.pick(req.body,'description','completed');
+	var validAttributes={};
+	var matchedTodo = _.findWhere(todos, {id: parseInt(req.params.id)});
+	if(!matchedTodo)
+	{
+		return res.status(404).send('The todo item trying to update is not found');
+	}
+	if (body.hasOwnProperty('completed')&&_.isBoolean(body.completed))
+	{
+		validAttributes.completed=body.completed;
+	}
+	else if(body.hasOwnProperty('completed'))
+	{
+		return res.status(400).send();
+	}
+	
+	if (body.hasOwnProperty('description')&&_.isString(body.description)&& body.description.trim().length!=0)
+	{
+		validAttributes.description=body.description;
+	}
+	else if(body.hasOwnProperty('description'))
+	{
+		return res.status(400).send();
+	}
+	
+	_.extend(matchedTodo,validAttributes);
+	return res.json(matchedTodo);
+
+
 });
 
 app.listen(PORT,
