@@ -3,9 +3,8 @@ var app=express();
 var PORT=process.env.PORT||3000;
 var bodyParser=require('body-parser');
 var _=require('underscore');
-var db=require('./db.js');
 app.use(bodyParser.json());
-
+var id=1;
 var todos=[];
 app.get('/',
 	function(req,res)
@@ -35,7 +34,11 @@ app.get('/todos',
 						return todo.description.toLowerCase().indexOf(queryParams.q.toLowerCase())>-1;
 					});
 			}
+
+
+		
 			res.json(filteredToDos);
+		
 		}
 	);
 
@@ -55,21 +58,18 @@ app.post('/todos',
 	{
 
 
-		var validAttributes=_.pick(req.body,'description','completed');
-		
-
-		if (_.isBoolean(validAttributes.completed)&&_.isString(validAttributes.description)&& validAttributes.description.trim().length!=0)
+		var body=_.pick(req.body,'description','completed');
+		if (_.isBoolean(body.completed)&&_.isString(body.description)&& body.description.trim().length!=0)
 		{
-	
-			db.sequelize.sync().then(function(){
-				db.todo.create(validAttributes).then(
-					function(todo){res.json(todo.toJSON() );},
-					function(e){res.status(400).send('unable to create todo due to bad data')}
-					);
-			}).then(function(){console.log('Finished creating todo!')});
-
+			body.description=body.description.trim();
+			body.id=id++;
+			todos.push(body);
+			res.json(body);
 		}
-});
+		else
+			return res.status(400).send('Unable to create todos due to bad data');
+	}
+);
 
 app.delete('/todos/:id', function (req, res) {
 	var matchedTodo = _.findWhere(todos, {id: parseInt(req.params.id)});
@@ -114,15 +114,11 @@ app.put('/todos/:id',function(req,res){
 
 });
 
-db.sequelize.sync().then(function(){
-	app.listen(PORT,
+app.listen(PORT,
 			function()
 			{
 				console.log("Running Express at port number: "+PORT+'!');
 			}
 		);
-});
-
-
 
 
