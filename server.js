@@ -26,7 +26,7 @@ app.get('/todos',
 			{
 				filteredToDos=_.where(filteredToDos,{completed:false});
 			}
-				
+			console.log(filteredToDos);
 			res.json(filteredToDos);
 			
 		}
