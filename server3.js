@@ -23,7 +23,7 @@ app.get('/todos',
 app.get('/todos/:id',
 		function(req,res)
 		{
-			var matchedTodoItem=_.findWhere(todos,{id:parseInt(req.params.id)});
+			var matchedTodoItem=_.findWhere(todos,{id:parseInt(req.params.id,10)});
 			if (matchedTodoItem)
 				res.json(matchedTodoItem);
 			else
@@ -50,17 +50,34 @@ app.post('/todos',
 	}
 );
 
-app.delete('/todos/:id', function (req, res) {
-	//var todoId = parseInt(req.params.id, 10);
-	var matchedTodo = _.findWhere(todos, {id: parseInt(req.params.id)});
+// app.delete('/todos/:id',function(req,res){
+// 			console.log("Im here");
+// 			var matchedTodoItem=_.findWhere(todos,{id:parseInt(req.params.id,10)});
+// 			console.log("Match found");
+// 			if (matchedTodoItem)
+// 			{
+// 				todos=_.without(todos,matchedTodoItem);
+// 				res.status(200).json(matchedTodoItem);
+// 			}
+// 			else
+// 				res.status(404).send("No todo item found to delete ya!");
+// 		});
 
-	if (!matchedTodo) {
-		res.status(404).json({"error": "no todo found with that id"});
-	} else {
-		todos = _.without(todos, matchedTodo);
-		res.json(matchedTodo);
-	}
-});
+app.delete('/todos/:id',
+		function(req,res)
+		{
+			var matchedTodoItem=_.findWhere(todos,{id:parseInt(req.params.id,10)});
+			console.log("Match found");
+			if (matchedTodoItem)
+			{
+				todos=_.without(todos,matchedTodoItem);
+				res.status(200).json(matchedTodoItem);
+			}
+			else
+				res.status(404).send("No todo item found to delete ya!");
+		}
+	);
+
 
 app.listen(PORT,
 			function()
