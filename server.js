@@ -27,9 +27,6 @@ app.get('/todos',
 	
 			var filteredToDos=todos;
 			var filters={};
-
-
-
 			if (req.query.hasOwnProperty('completed') && req.query.completed==='true')
 				filters.completed=true;
 			else if (req.query.hasOwnProperty('completed') && req.query.completed==='false')
@@ -103,20 +100,22 @@ app.delete('/todos/:id', function (req, res) {
 	db.todo.findById(parseInt(req.params.id)).then(
 					function(todo)
 					{
-						todo.destroy().then(
-							function()
-							{
-								res.send("Successfully deleted the task");
-							},
-							function()
-							{
-								res.send();
-							}
-						);
-					},
-					function(e)
-					{
-						res.status(404).send("To-do item not found!")
+						if (todo)
+						{
+							todo.destroy().then(
+								function()
+								{
+									res.send("Successfully deleted the task");
+								},
+								function(e)
+								{
+									res.json(e);
+								}
+						
+							);
+						}
+						else
+							res.status(404).send("To-do item not found!");
 					}
 				);
 
