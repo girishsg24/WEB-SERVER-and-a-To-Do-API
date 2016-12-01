@@ -40,7 +40,7 @@ app.get('/todos',
 												}
 												else
 												{
-													res.json('No matches Found');
+													res.status(404).json('No matches Found');
 												}
 													
 											},
