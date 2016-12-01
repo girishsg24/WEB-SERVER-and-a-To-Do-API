@@ -34,7 +34,7 @@ app.get('/todos',
 			db.todo.findAll({where:filters}).then(
 											function(todos)
 											{
-												if(todos)
+												if(todos.length!=0)
 												{
 													res.json(todos);
 												}
