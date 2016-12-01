@@ -2,11 +2,11 @@
  var env=process.env.NODE_ENV||'devlocal';
 
  if (env==='production')
- 	var sequelize=new Sequelize(PROCESS.ENV.DATABASE_URL,{dialect:'postgres'});
+ 	var sequelize=new Sequelize(PROCESS.env.DATABASE_URL,{dialect:'postgres'});
  else
- 	var sequelize=new Sequelize(undefined,undefined,undefined,{
- 	'dialect':'sqlite',
- 	'storage':__dirname+'/data/dev-gir-database.sqlite'
+ 		var sequelize=new Sequelize(undefined,undefined,undefined,{
+ 		'dialect':'sqlite',
+ 		'storage':__dirname+'/data/dev-gir-database.sqlite'
 	 });
  var db={
  		sequelize:sequelize,
