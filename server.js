@@ -10,7 +10,14 @@ var todos=[];
 app.get('/',
 	function(req,res)
 	{
-		res.send("Welcome to ToDo API, We help you mange your tasks!");
+		var line1="Welcome to SJSU Team-5's To-Do API, We help you manage you tasks better!";
+		var line2="Save you to-do items in a jizzy!";
+		var line3="All you need is to provide to-do JSON objects in the below format";
+		var line4=JSON.stringify({
+			description:'To-Do description Eg. walk the dog!',
+			completed: true
+		});
+		res.send(line1+'\n'+line2+'\n'+line3+'\n'+line4);
 	}
 );
 
