@@ -100,44 +100,55 @@ app.post('/todos',
 });
 
 app.delete('/todos/:id', function (req, res) {
-	var matchedTodo = _.findWhere(todos, {id: parseInt(req.params.id)});
+	db.todo.findById(parseInt(req.params.id)).then(
+					function(todo)
+					{
+						todo.destroy().then(
+							function()
+							{
+								res.send("Successfully deleted the task");
+							},
+							function()
+							{
+								res.send();
+							}
+						);
+					},
+					function(e)
+					{
+						res.status(404).send("To-do item not found!")
+					}
+				);
 
-	if (!matchedTodo) {
-		res.status(404).json({"error": "no todo found with that id"});
-	} else {
-		todos = _.without(todos, matchedTodo);
-		res.json(matchedTodo);
-	}
 });
 
 app.put('/todos/:id',function(req,res){
 	var body=_.pick(req.body,'description','completed');
-	var validAttributes={};
-	var matchedTodo = _.findWhere(todos, {id: parseInt(req.params.id)});
-	if(!matchedTodo)
-	{
-		return res.status(404).send('The todo item trying to update is not found');
-	}
-	if (body.hasOwnProperty('completed')&&_.isBoolean(body.completed))
-	{
-		validAttributes.completed=body.completed;
-	}
-	else if(body.hasOwnProperty('completed'))
-	{
-		return res.status(400).send();
-	}
+	var attributes={};
 	
-	if (body.hasOwnProperty('description')&&_.isString(body.description)&& body.description.trim().length!=0)
-	{
-		validAttributes.description=body.description;
-	}
-	else if(body.hasOwnProperty('description'))
-	{
-		return res.status(400).send();
-	}
-	
-	_.extend(matchedTodo,validAttributes);
-	return res.json(matchedTodo);
+	if (body.hasOwnProperty('completed'))
+		attributes.completed=body.completed;
+
+	if (body.hasOwnProperty('description'))
+		attributes.description=body.description;
+	db.todo.findById(parseInt(req.params.id)).then(
+							function(todo)
+							{
+								if(todo)
+									return todo.update(attributes);
+								else
+									res.status(404).send("To do item not found");
+							}
+						).then(
+							function(todo)
+							{
+								res.json(todo);
+							},
+							function(error)
+							{
+								res.status(400).json(error);
+							}
+						);
 
 
 });
