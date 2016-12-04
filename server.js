@@ -6,6 +6,7 @@ var _=require('underscore');
 var db=require('./db.js');
 app.use(bodyParser.json());
 
+app.use(express.static(__dirname+'/public'));
 var todos=[];
 app.get('/',
 	function(req,res)
@@ -32,9 +33,7 @@ app.get('/todos',
 			else if (req.query.hasOwnProperty('completed') && req.query.completed==='false')
 				filters.completed=false;
 			if(req.query.hasOwnProperty('q') && _.isString(req.query.q)&&req.query.q.length!=0)
-			{
 				filters.description={$like:'%'+req.query.q+'%'};
-			}
 			db.todo.findAll({where:filters}).then(
 											function(todos)
 											{
@@ -78,14 +77,9 @@ app.get('/todos/:id',
 app.post('/todos',
 	function(req,res)
 	{
-
-
 		var validAttributes=_.pick(req.body,'description','completed');
-		
-
 		if (_.isBoolean(validAttributes.completed)&&_.isString(validAttributes.description)&& validAttributes.description.trim().length!=0)
 		{
-	
 			db.sequelize.sync().then(function(){
 				db.todo.create(validAttributes).then(
 					function(todo){res.json(todo.toJSON() );},
@@ -111,7 +105,6 @@ app.delete('/todos/:id', function (req, res) {
 								{
 									res.json(e);
 								}
-						
 							);
 						}
 						else
