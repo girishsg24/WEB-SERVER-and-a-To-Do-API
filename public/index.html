@@ -2,37 +2,51 @@
 	<html>
 		<head>
 			<meta charset="utf-8"/>
-			<title>My App!</title>
+			<style>
+				body {
+   						background-image: url("bat.jpg");
+    					background-repeat: repeat;
+   						background-position: center;
+    					margin-right: 200px;
+					}
+					h1{color:Silver; font-weight: bold;font-family: ‘Palatino Linotype’, ‘Book Antiqua’, Palatino, serif;}
+					h2{color:FireBrick; font-weight: bold;font-family: ‘Palatino Linotype’, ‘Book Antiqua’, Palatino, serif;}
+					h3{color:FireBrick;font-weight: bold;font-family: ‘Palatino Linotype’, ‘Book Antiqua’, Palatino, serif;}
+					p{color:Silver;font-size: 20px; font-family: ‘Palatino Linotype’, ‘Book Antiqua’, Palatino, serif;}
+			</style>
+			<title>TO-DO API!</title>
 			<body>
-				<audio src='Rise.mp3' autoplay></audio>
-				
-				<h1>SJSU Team 5's To-Do API</h1>
-				<p>We make your life easier, Create and manage your tasks in a Jizzy!</p>
+				<audio src='Rise.mp3' autoplay loop></audio>
+				<p style=" text-align: center";>SJSU Team-5</p>
+				<h1 style=" text-align: center;"><u>Day-To-Day API</u></h1>
+				<!--p style=" text-align: center;">We make your life easier, Create and manage your tasks in a Jizzy!</p-->
+				<marquee style="color: white">We make your life easier, Create and manage your tasks in a Jizzy!</marquee>
+
 				<h3></h3>
-				<h2>To Create a task</h2>
+				<h2 style=" padding-left:40px;"><u>To Create a task</u></h2>
 				<p>Use postman  and send a post request to the url https://sjsu-team5-todo-api.herokuapp.com/todos/ with a JSON object.</p>
 				<p>JSON object format Eg:</p>
-				<p>{</p>
-				<p> "description" : "Be Batman and save the city!",</p>
-				<p> "completed" : false</p>
-				<p>}</p>
-				<h2>To Update a task</h2>
+				<p style=" padding-left:40px;">{</p>
+				<p style=" padding-left:80px;"> "description" : "Be Batman and save the city!",</p>
+				<p style=" padding-left:80px;"> "completed" : false</p>
+				<p style=" padding-left:40px;">}</p>
+				<h2 style=" padding-left:40px;"><u>To Update a task</u></h2>
 				<p>Use postman  and send a put request to the url https://sjsu-team5-todo-api.herokuapp.com/todos/'id' with a JSON object.</p>
 				<p>'id' being equal to the id of the task that you would like to update.</p>
 				<p>JSON object is again in the same format as above but you can decide to skip the attribute that you do not intend to change.</p>
 				<p></p>
-				<h2>To Delete a task</h2>
+				<h2 style=" padding-left:40px;"><u>To Delete a task</u></h2>
 				<p>Use Postman and send a delete request to the url https://sjsu-team5-todo-api.herokuapp.com/todos/'id'</p>
 				<p>'id' being equal to the id of the task that you would like to delete.</p>
 				<p></p>
-				<h2>To retrieve all the tasks</h2>
+				<h2 style=" padding-left:40px;"><u>To retrieve all the tasks</u></h2>
 				<p>Use Postman and send a get request to the url https://sjsu-team5-todo-api.herokuapp.com/todos</p>
 				<p></p>
-				<h2>To retrieve a selected task.</h2>
+				<h2 style=" padding-left:40px;"><u>To retrieve a selected task.</u></h2>
 				<p>Use Postman and send a get request to the url https://sjsu-team5-todo-api.herokuapp.com/todos/'id'</p>
 				<p>'id' being equal to the id of the task that you would like to fetch.</p>
 				<p></p>
-				<h2>To retrieve task based on filters.</h2>
+				<h2 style=" padding-left:40px;"><u>To retrieve task based on filters.</u></h2>
 				<p><p>Use Postman and send a get request to the url https://sjsu-team5-todo-api.herokuapp.com/todos followed by ? and the query.</p>
 				<p>For Eg: To fetch all the tasks with completed status set to false</p>
 				<p>https://sjsu-team5-todo-api.herokuapp.com/todos/?completed=false</p>
@@ -40,15 +54,15 @@
 				<p>https://sjsu-team5-todo-api.herokuapp.com/todos/?q=batman</p>
 				<p>You could decide to chain to have both the filters.</p>
 				<p>https://sjsu-team5-todo-api.herokuapp.com/todos/?q=batman&completed=false</p>
-				<!--image src='/picture.jpeg'-->
-				<h2>Thank You!</h2>
-				<p>QUOTE:"It's not who you are underneath, It's what you do that defines you".</p>
-				<p>-BatMan Begins</p>
-				<h3>Created by : Girish, Kiran, Vrishank, Kevin, Kishore.</h3>
-				<p>*************************WORK IN PROGRESS************************</p>
+                <p style=" text-align: center;"><strong>*************************WORK IN PROGRESS************************</strong></p>
 				<p></p>
 				<p>If you like our work, give us a 'CALLBACK' & we wont disappoint you. I 'PROMISE', pun intended.</p>
 				<p>We do not own the audio & the image files used, This is solely for the purpose of learning & demonstrating our skills.</p>
+				<h2 style=" text-align: center;">Thank You!</h2>
+				<p style=" text-align: center;">QUOTE:"It's not who you are underneath, It's what you do that defines you".</p>
+				<p style=" text-align: center;">-BatMan Begins</p>
+                <marquee style="color: white">Created by : Girish, Kiran, Vrishank, Kevin, Kishore.</marquee>
+
 			</body>
 		</head>
 	</html>
