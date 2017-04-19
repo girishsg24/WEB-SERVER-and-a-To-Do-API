@@ -8,19 +8,6 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname+'/public'));
 var todos=[];
-// app.get('/',
-// 	function(req,res)
-// 	{
-// 		var line1="Welcome to SJSU Team-5's To-Do API, We help you manage you tasks better!";
-// 		var line2="Save you to-do items in a jizzy!";
-// 		var line3="All you need is to provide to-do JSON objects in the below format";
-// 		var line4=JSON.stringify({
-// 			description:'To-Do description Eg. walk the dog!',
-// 			completed: true
-// 		});
-// 		res.send(line1+'\n'+line2+'\n'+line3+'\n'+line4);
-// 	}
-// );
 
 app.get('/todos',
 		function(req,res)
@@ -35,23 +22,23 @@ app.get('/todos',
 			if(req.query.hasOwnProperty('q') && _.isString(req.query.q)&&req.query.q.length!=0)
 				filters.description={$like:'%'+req.query.q+'%'};
 			db.todo.findAll({where:filters}).then(
-											function(todos)
-											{
-												if(todos.length!=0)
-												{
-													res.json(todos);
-												}
-												else
-												{
-													res.status(404).json('No matches Found');
-												}
+								function(todos)
+								{
+									if(todos.length!=0)
+									{
+										res.json(todos);
+									}
+									else
+									{
+										res.status(404).json('No matches Found');
+									}
 													
-											},
-											function(e)
-											{
-												res.status(500).send();
-											}
-											);
+								},
+								function(e)
+								{
+									res.status(500).send();
+								}
+								);
 		}
 	);
 
@@ -59,18 +46,18 @@ app.get('/todos/:id',
 		function(req,res)
 		{
 			return db.todo.findById(parseInt(req.params.id)).then(
-																function(todo)
-																{
-																	if (todo)
-																		res.json(todo);
-																	else
-																		res.status(404).send("No such todo item exists");
-																},
-																function(e)
-																{
-																	res.status(500).send("Bad request made!");
-																}
-															);
+										function(todo)
+										{
+											if (todo)
+												res.json(todo);
+											else
+												res.status(404).send("No such todo item exists");
+										},
+										function(e)
+										{
+											res.status(500).send("Bad request made!");
+										}
+									);
 		}
 	);
 
